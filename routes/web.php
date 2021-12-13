@@ -21,6 +21,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('posts/{post}', function ($slug) {
-    return view('post',['post' => Post::findorfail($slug)]);
+Route::get('posts/{post}', function ($id) {
+    return view('post',['post' => Post::findorfail($id)]);
 });
