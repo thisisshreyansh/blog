@@ -30,7 +30,15 @@
                         >
                             Log Out
                         </x-dropdown-item>
+                        @if (auth()->user()?->can('admin'))                        
+                            <x-dropdown-item href="/admin/posts/create" :active="request()->is('/admin/posts/create')">
+                                New Post
+                            </x-dropdown-item>
 
+                            <x-dropdown-item href="/admin/posts" :active="request()->is('/admin/posts')">
+                                Dashboard
+                            </x-dropdown-item>
+                        @endif
                         <form id="logout-form" method="POST" action="/logout" class="hidden">
                             @csrf
                         </form>

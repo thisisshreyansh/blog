@@ -19,7 +19,8 @@
                     class="w-full text-sm focus:outline-none focus:ring"
                     rows="5"
                     placeholder="Quick, thing of something to say!"
-                    required></textarea>
+                    required>
+                </textarea>
 
                 @error('body')
                     <span class="text-xs text-red-500">{{ $message }}</span>
