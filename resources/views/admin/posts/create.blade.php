@@ -6,8 +6,8 @@
             <x-form.input name="title" required />
             <x-form.input name="slug" required />
             <x-form.input name="thumbnail" type="file" required />
-            <x-form.textarea name="excerpt" required />
-            <x-form.textarea name="body" required />
+            {{-- <x-form.textarea name="excerpt" required />
+            <x-form.textarea name="body" required /> --}}
 
             <x-form.field>
                 <x-form.label name="category"/>
@@ -20,7 +20,7 @@
                         >{{ ucwords($category->name) }}</option>
                     @endforeach
                 </select>
-
+                
                 <x-form.error name="category"/>
             </x-form.field>
 

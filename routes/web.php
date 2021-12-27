@@ -48,3 +48,5 @@ Route::middleware('can:admin')->group(function () {
 
  
 Route::get('get/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
+Route::get('admin/posts/category', [DownloadFileController::class, 'category']);
+Route::post('admin/posts/category', [DownloadFileController::class, 'store']);
