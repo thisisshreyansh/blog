@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\AdminPostController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DownloadFileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,6 @@ Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth'
 Route::middleware('can:admin')->group(function () {
     Route::resource('admin/posts', AdminPostController::class)->except('show');
 });
+
+ 
+Route::get('get/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');

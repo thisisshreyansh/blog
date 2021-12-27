@@ -16,7 +16,7 @@ class AdminsOnly
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user() ?-> username!=='estoltenberg'){
+        if(auth()->user() ?-> email_verified_at === NULL){
             abort(403);
         }
         return $next($request);

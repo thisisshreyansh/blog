@@ -3,7 +3,7 @@
         <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
             <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
                 <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
-                    <img src="{{ asset('storage/thumbnails/' . $post->thumbnail) }}" alt="Blog Post illustraition" class="rounded-xl">
+                    <img src= "{{ asset('storage/thumbnails/' .$post->thumbnail) }}" alt="Blog Post illustraition" class="rounded-xl">
 
                     <p class="mt-4 block text-gray-400 text-xs">
                         Published <time>{{$post->created_at->diffForHumans()}}</time>
@@ -59,7 +59,12 @@
                         <x-post-comment :comment="$comment"/>
                     @endforeach
                 </section>
-
+                <div class="space-x-1 flex flex-shrink-0">
+                    <a href="/get/{{$post->thumbnail}}"
+                        class="px-3 py-1"
+                        style="font-size: 20px"><button class="btn btn-primary">Download Image</button>
+                    </a>
+                </div>
             </article>
         </main>
     </section>
