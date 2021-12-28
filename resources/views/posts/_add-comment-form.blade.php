@@ -1,4 +1,10 @@
 @auth
+<div class="space-x-1 flex flex-shrink-0">
+    <a href="/get/{{$post->thumbnail}}"
+        class="px-3 py-1"
+        style="font-size: 20px"><button class="btn btn-primary">Download Image</button>
+    </a>
+</div>
     <x-panel>
         <form method="POST" action="/posts/{{ $post->slug }}/comments">
             @csrf
@@ -19,7 +25,8 @@
                     class="w-full text-sm focus:outline-none focus:ring"
                     rows="5"
                     placeholder="Quick, thing of something to say!"
-                    required></textarea>
+                    required>
+                </textarea>
 
                 @error('body')
                     <span class="text-xs text-red-500">{{ $message }}</span>
@@ -34,6 +41,6 @@
 @else
     <p class="font-semibold">
         <a href="/register" class="hover:underline">Register</a> or
-        <a href="/login" class="hover:underline">log in</a> to leave a comment.
+        <a href="/login" class="hover:underline">log in</a> to leave a comment or download a image.
     </p>
 @endauth
