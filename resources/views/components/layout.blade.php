@@ -10,7 +10,11 @@
 <body style="font-family: Open Sans, sans-serif">
     <section class="px-6 py-8">
         <nav class="md:flex md:justify-between md:items-center">
-
+            <div>
+                <a href="/">
+                    <img src="https://images.all-free-download.com/images/graphiclarge/android_gallery_logo_6830698.jpg" alt="Home page logo" width="90" height="30">
+                </a>
+            </div>
             <div class="mt-8 md:mt-0 flex items-center">
                 @auth
                     <x-dropdown>

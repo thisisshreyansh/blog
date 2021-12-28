@@ -22,7 +22,7 @@
 
             {{ $posts->links() }}
         @else
-            <p class="text-center">No Post Yet PLease Check Back Later</p>
+            <p class="text-center">No Image In Gallery Please Check Back Later</p>
         @endif
 
     </main>
