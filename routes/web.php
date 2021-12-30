@@ -4,8 +4,10 @@ use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\AdminPostController;
+use App\Http\Controllers\AlbumController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DownloadFileController;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +20,11 @@ use App\Http\Controllers\DownloadFileController;
 |
 */
 
-Route::get('/', [PostController::class, 'index'])->name('home');
-Route::get('posts/{post:slug}', [PostController::class, 'show']);
-Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
+// Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('/', [AlbumController::class, 'index'])->name('home');
+Route::get('posts/{album:album_id}', [AlbumController::class, 'show']);
+
+// Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
 
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
@@ -48,5 +52,12 @@ Route::middleware('can:admin')->group(function () {
 
  
 Route::get('get/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
+
 Route::get('admin/posts/category', [DownloadFileController::class, 'category']);
 Route::post('admin/posts/category', [DownloadFileController::class, 'store']);
+
+Route::get('admin/posts/album', [AlbumController::class, 'album'])->middleware('admin');
+Route::post('admin/posts/album', [AlbumController::class, 'store'])->middleware('admin');
+
+Route::get('admin/posts/image', [ImageController::class, 'show'])->middleware('admin');
+Route::post('admin/posts/image', [ImageController::class, 'store'])->middleware('admin');

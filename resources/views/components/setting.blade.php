@@ -22,6 +22,14 @@
                     <a href="/admin/posts/category" class="{{ request()->is('admin/posts/category') ? 'text-blue-500' : '' }}">New Category</a>
                 </li>
 
+                <li>
+                    <a href="/admin/posts/album" class="{{ request()->is('admin/posts/album') ? 'text-blue-500' : '' }}">New Album</a>
+                </li>
+
+                <li>
+                    <a href="/admin/posts/image" class="{{ request()->is('admin/posts/image') ? 'text-blue-500' : '' }}">New Image</a>
+                </li>
+
             </ul>
         </aside>
 
