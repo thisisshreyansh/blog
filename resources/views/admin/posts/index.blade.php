@@ -6,31 +6,35 @@
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                   <table class="min-w-full divide-y divide-gray-200">
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($posts as $post)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                              <div class="flex items-center">
-    
-                                <div class="text-sm font-medium text-gray-900">
-                                    <a href="/posts/{{$post->slug}}">
-                                        {{$post->title}}
-                                    </a>
+                      @foreach (\App\Models\Album::all() as $album)
+                        @if ($album->user_id === Auth::id())
+                          <tr>
+                              <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                  <div class="text-sm font-medium text-gray-900">
+                                      <a href="/posts/{{$album->album_id}}">
+                                          {{$album->album_name}}
+                                      </a>
+                                  </div>
                                 </div>
-    
-                              </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <a href="/admin/posts/{{$post->id}}/edit" class="text-blue-500 hover:text-blue-600">Edit</a>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                              <form action="/admin/posts/{{$post->id}}" method="POST">
-                                @csrf
-                                @method('DELETE')
+                              </td>
+                              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <a href="/admin/posts/{{$album->album_id}}/edit" class="text-blue-500 hover:text-blue-600">Edit</a>
+                              </td>
+                              
+                              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <form action="/admin/posts/{{$album->album_id}}" method="POST">
+                                  @csrf
+                                  @method('DELETE')
 
-                                <button class="text-red-500 hover:text-red-600">Delete</button>
-                              </form>
-                            </td>
-                        </tr>
+                                  <button class="text-red-500 hover:text-red-600">Delete</button>
+                                  
+                                </form>
+                              </td>
+                              
+                              
+                          </tr>
+                          @endif
                         @endforeach
                     </tbody>
                   </table>

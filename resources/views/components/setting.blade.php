@@ -11,15 +11,15 @@
 
             <ul>
                 <li>
-                    <a href="/admin/posts" class="{{ request()->is('admin/posts') ? 'text-blue-500' : '' }}">All Posts</a>
+                    <a href="/admin/posts" class="{{ request()->is('admin/posts') ? 'text-blue-500' : '' }}">All Albums</a>
                 </li>
 
                 <li>
-                    <a href="/admin/posts/create" class="{{ request()->is('admin/posts/create') ? 'text-blue-500' : '' }}">New Post</a>
+                    <a href="/admin/posts/sharing" class="{{ request()->is('admin/posts/sharing') ? 'text-blue-500' : '' }}">Sharing</a>
                 </li>
 
                 <li>
-                    <a href="/admin/posts/category" class="{{ request()->is('admin/posts/category') ? 'text-blue-500' : '' }}">New Category</a>
+                    <a href="/admin/posts/editsharing" class="{{ request()->is('admin/posts/editsharing') ? 'text-blue-500' : '' }}">Edit Sharing</a>
                 </li>
 
                 <li>

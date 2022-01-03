@@ -6,7 +6,9 @@
 <link href="https://cdn.jsdelivr.net/npm/daisyui@1.20.0/dist/full.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="{{asset('lightbox.min.css')}}" type="text/css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+<script type="text/javascript" src="{{asset('lightbox-plus-jquery.js')}}"></script>
 <body style="font-family: Open Sans, sans-serif">
     <section class="px-6 py-8">
         <nav class="md:flex md:justify-between md:items-center">
@@ -32,8 +34,12 @@
                             Log Out
                         </x-dropdown-item>
                         @if (auth()->user()?->can('admin'))                        
-                            <x-dropdown-item href="/admin/posts/create" :active="request()->is('/admin/posts/create')">
-                                New Post
+                            <x-dropdown-item href="/admin/posts/image" :active="request()->is('/admin/posts/image')">
+                                New Image
+                            </x-dropdown-item>
+
+                            <x-dropdown-item href="/admin/posts/album" :active="request()->is('/admin/posts/album')">
+                                New Album
                             </x-dropdown-item>
 
                             <x-dropdown-item href="/admin/posts" :active="request()->is('/admin/posts')">
@@ -67,4 +73,5 @@
         </footer>
     </section>
     <x-flash/>
+    
 </body>

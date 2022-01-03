@@ -18,7 +18,9 @@ namespace App\Models{
  * @property int $user_id
  * @property string $album_name
  * @property string|null $album_cover
- * @property int $public_staus
+ * @property string $public_status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $author
  * @method static \Database\Factories\AlbumFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Album newModelQuery()
@@ -27,7 +29,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Album whereAlbumCover($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Album whereAlbumId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Album whereAlbumName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Album wherePublicStaus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Album whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Album wherePublicStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Album whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Album whereUserId($value)
  */
 	class Album extends \Eloquent {}
@@ -92,7 +96,7 @@ namespace App\Models{
  * @property string|null $image_path
  * @property int $user_id
  * @property int $album_id
- * @property int $deleted_at
+ * @property string|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Album $album

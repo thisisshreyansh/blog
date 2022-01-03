@@ -11,7 +11,7 @@ class CategoryDropdown extends Component
     public function render()
     {
         return view('components.category-dropdown',[
-            'categories' => Album::where('public_status','public_status')->orWhere('user_id',Auth::id()),
+            'categories' => Album::where('public_status','1')->orWhere('user_id',Auth::id()),
             'currentCategory' => Album::firstWhere('album_name',request('category'))
         ]);
     }

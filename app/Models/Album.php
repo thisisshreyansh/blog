@@ -9,6 +9,7 @@ class Album extends Model
 {
     use HasFactory;
     protected $gaurded = [];
+    protected $primaryKey = 'album_id';
 
     public function image()
     {

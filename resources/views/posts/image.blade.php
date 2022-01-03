@@ -1,9 +1,12 @@
 <x-layout>
-    <section class="px-6 py-8">
-        <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
+    <h1 class="text-4xl">
+        Image display and sharing
+    </h1>
+    <section class="px-0 py-8">
+        <main class="max-w-6xl mx-auto mt-10 lg:mt-10 space-y-6">
             <article class="max-w-4xl mx-auto gap-x-10">
                 
-                <div class="col-span-4 lg:text-center lg:pt-14 mb-10">  
+                <div class="col-span-4 lg:text-center lg:pt-5 mb-10">  
                     <p class="mt-4 block text-gray-400 text-xs">
                         Published <time>{{$album->created_at->diffForHumans()}}</time>
                     </p>
@@ -45,13 +48,13 @@
                     <h1 class="font-bold text-3xl lg:text-4xl mb-10">
                         {{$album->album_name}}
                     </h1>
-                    <img src= "{{ asset('storage/thumbnails/' .$album->album_cover) }}" alt="Blog Post illustraition" class="rounded-xl">
+                    <img src= "{{ asset('storage/thumbnails/' .$album->album_cover) }}" alt="Images corresponding to album" class="rounded-xl">
                 </div>
 
                 {{-- <section class="col-span-8 col-start-5 mt-10 space-y-6"> --}}
                 @if ($image->count())
             
-                    <div style="display: flex;flex-wrap: wrap;">
+                    <div style="display:flex ">
                         @foreach ($image::all() as $img) 
                             @if ($album->album_id == $img->album_id)
                                 {{-- @if ($img->user_id == Auth::id()) --}}

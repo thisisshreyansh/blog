@@ -2,8 +2,10 @@
 <article 
     {{$attributes->merge(['class'=>'transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl'])}}>
     <div class="py-6 px-5">
-        <div>
-            <img src="{{ asset('storage/thumbnails/' . $img->image_path) }}" alt="Blog Post illustration" class="rounded-xl">
+        <div style="display: flex;flex-wrap: wrap;">
+            <a href="{{ asset('storage/' . $img->image_path) }}" data-lightbox="{{$img->album_id}}" data-title="{{$img->image_name}}">
+                <img src="{{ asset('storage/' . $img->image_path) }}" width="700px">
+            </a>
         </div>
 
         <div class="mt-8 flex flex-col justify-between">
@@ -29,10 +31,21 @@
                         </h5>
                     </div>
 
+                    @if (auth()->user()?->can('admin')) 
                     <a href="/get/{{$img->image_path}}"
                         class="px-3 py-1"
                         style="font-size: 20px"><button class="btn btn-primary">Download Image</button>
                     </a>
+                    @endif
+
+                    @if ($img->user_id === Auth::id())
+                        <form action="/posts/{{$img->album_id}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+
+                            <button class="text-red-500 hover:text-red-600">Delete</button>
+                        </form>
+                    @endif
                 </div>
             </footer>
         </div>

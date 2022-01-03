@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\Album;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -18,6 +19,13 @@ class ImageController extends Controller
     public function show()
     {
         return view('admin.posts.image');
+    }
+
+    public function destroy( Image $image)
+    {
+        $image->where('image_id',$image->image_id)->delete();
+
+        return back()->with('success', 'Image Deleted!');
     }
 
     public function store()
