@@ -3,8 +3,10 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
+use App\Models\Album;
 
-class CAtegoryFactory extends Factory
+class SharedWithFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,8 +16,8 @@ class CAtegoryFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->word(),
-            'slug'=>$this->faker->slug()
+            'album_id'=>Album::factory(),
+            'user_id'=>User::factory(),
         ];
     }
 }

@@ -3,15 +3,16 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
-use App\Models\Category;
+use App\Models\Album;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryDropdown extends Component
 {
     public function render()
     {
         return view('components.category-dropdown',[
-            'categories' => Category::all(),
-            'currentCategory' => Category::firstWhere('slug',request('category'))
+            'categories' => Album::where('public_status','1')->orWhere('user_id',Auth::id()),
+            'currentCategory' => Album::firstWhere('album_name',request('category'))
         ]);
     }
 }
