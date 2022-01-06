@@ -32,10 +32,10 @@
                     </div>
 
                     @if (auth()->user()?->can('admin')) 
-                    <a href="{{route('downloadFile',substr($img->image_path,11))}}"
-                        class="px-3 py-1"
-                        style="font-size: 20px"><button class="btn btn-primary">Download Image</button>
-                    </a>
+                        <a href="{{route('downloadFile',substr($img->image_path,11))}}"
+                            class="px-3 py-1"
+                            style="font-size: 20px"><button class="btn btn-primary">Download Image</button>
+                        </a>
                     @endif
 
                     @if ($img->user_id === Auth::id())
