@@ -1,7 +1,4 @@
 <x-layout>
-    <h1 class="text-4xl">
-        Image display and sharing
-    </h1>
     <section class="px-0 py-8">
         <main class="max-w-6xl mx-auto mt-10 lg:mt-10 space-y-6">
             <article class="max-w-4xl mx-auto gap-x-10">
@@ -48,7 +45,12 @@
                     <h1 class="font-bold text-3xl lg:text-4xl mb-10">
                         {{$album->album_name}}
                     </h1>
-                    <img src= "{{ asset('storage/thumbnails/' .$album->album_cover) }}" alt="Images corresponding to album" class="rounded-xl">
+                    <img src= "{{ asset('storage/public/' .$album->album_cover) }}" alt="Images corresponding to album" class="rounded-xl" width="40%">
+
+                    <a href="{{route('downloadAlbum',$album->album_id)}}"
+                        class="px-3 py-1"
+                        style="font-size: 20px"><button class="btn btn-primary">Download Album</button>
+                    </a>
                 </div>
 
                 {{-- <section class="col-span-8 col-start-5 mt-10 space-y-6"> --}}

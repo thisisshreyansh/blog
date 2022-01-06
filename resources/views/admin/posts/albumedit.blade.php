@@ -9,7 +9,7 @@
                 <div class="flex-1">
                     <x-form.input name="album_cover" type="file" :value="old('album_cover',$album->album_cover)" />
                 </div>
-                <img src="{{ asset('storage/thumbnails/' . $album->album_cover) }}" alt=" album cover" class="rounded-xl ml-6">
+                <img src="{{ asset('storage/public/' . $album->album_cover) }}" alt=" album cover" class="rounded-xl ml-6">
             </div>
 
             <x-form.field>

@@ -6,13 +6,33 @@ use Illuminate\Http\Request;
 use App\Models\Album;
 use App\Models\Image;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class AlbumController extends Controller
 {
+    private $conn;
+
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
+    
     public function index()
     {
+        $sharedusers = Album::join('shared_withs', 'albums.album_id', '=', 'shared_withs.album_id')
+            ->where('shared_withs.user_id', '=', Auth::id())
+            ->filter(
+                request(['search'])
+                )
+            ->get();
+
         return view('posts.index', [
-            'album' => Album::latest()->paginate(9)->withQueryString()
+            'album' => Album::latest()
+            ->filter(
+                request(['search'])
+                )
+                ->paginate(9)->withQueryString(),
+            'shared' => $sharedusers
             ]);
     }
 
@@ -92,4 +112,5 @@ class AlbumController extends Controller
             'album_cover' => $album->exists ? ['image'] : ['required', 'image'],
         ]);
     }
+
 }

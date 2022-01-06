@@ -15,14 +15,7 @@
     </x-dropdown-item>
 
     @foreach (App\Models\Album::all() as $album)
-        @if ($album->user_id == Illuminate\Support\Facades\Auth::id())
-            <x-dropdown-item
-            href="/posts/{{ $album->album_id }}"
-            :active='request()->fullUrlIs("/posts/{{ $album->album_id }}")'
-            >
-            {{ ucwords($album->album_name)}}
-            </x-dropdown-item>
-        @elseif ($album->public_status != 0)
+        @if ($album->user_id == Auth::id() ||$album->public_status != 0)
             <x-dropdown-item
             href="/posts/{{ $album->album_id }}"
             :active='request()->fullUrlIs("/posts/{{ $album->album_id }}")'
@@ -31,4 +24,5 @@
             </x-dropdown-item>
         @endif
     @endforeach
+
 </x-dropdown>

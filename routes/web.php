@@ -6,6 +6,9 @@ use App\Http\Controllers\AlbumController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DownloadFileController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Mail\NewUserNotification;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,40 +21,20 @@ use App\Http\Controllers\ImageController;
 |
 */
 
-// Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/', [AlbumController::class, 'index'])->name('home');
 Route::get('posts/{album:album_id}', [AlbumController::class, 'show']);
 
-// Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
+// Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
+// Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
 
-Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
-Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
+// Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
+// Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
 
-Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
-Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
+// Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
-Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
-
-// Route::get('categories/{category:slug}', function (Category $category) {
-//     return view('posts',['posts' => $category->posts,
-//     'currentCategory' => $category,
-//     'categories' => Category::all()
-//     ]);
-// })->name('category');
-
-// Route::get('authors/{author:username}', function (User $author) {
-//     return view('posts.index',['posts' => $author->posts]);
-// });
-
-// Admin Section
-// Route::middleware('can:admin')->group(function () {
-//     Route::resource('admin/posts', AdminPostController::class)->except('show');
-// });
  
-Route::get('get/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
-
-Route::get('admin/posts/category', [DownloadFileController::class, 'category']);
-Route::post('admin/posts/category', [DownloadFileController::class, 'store']);
+// Route::get('get/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
+Route::get('get/{album:album_id}', [DownloadFileController::class, 'downloadAlbum'])->name('downloadAlbum');
 
 Route::get('admin/posts', [AlbumController::class, 'adminindex'])->middleware('admin');
 Route::get('admin/posts/album', [AlbumController::class, 'album'])->middleware('admin');
@@ -67,4 +50,13 @@ Route::delete('posts/{image:album_id}', [ImageController::class, 'destroy'])->mi
 Route::get('admin/posts/sharing', [SharedWithController::class, 'sharing'])->middleware('admin');
 Route::post('admin/posts/sharing', [SharedWithController::class, 'store'])->middleware('admin');
 Route::get('admin/posts/editsharing', [SharedWithController::class, 'index'])->middleware('admin');
-Route::delete('admin/posts/{sharing:album_id}', [SharedWithController::class, 'destroy'])->middleware('admin');
+Route::delete('editsharing/{shared:id}', [SharedWithController::class, 'destroy'])->middleware('admin')->name('revoke.sharing');
+
+//verification for auth routes
+Auth::routes(['verify' => true]);
+
+//forget pass
+Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');

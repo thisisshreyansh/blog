@@ -3,8 +3,8 @@
     {{$attributes->merge(['class'=>'transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl'])}}>
     <div class="py-6 px-5">
         <div style="display: flex;flex-wrap: wrap;">
-            <a href="{{ asset('storage/' . $img->image_path) }}" data-lightbox="{{$img->album_id}}" data-title="{{$img->image_name}}">
-                <img src="{{ asset('storage/' . $img->image_path) }}" width="700px">
+            <a href="{{ asset('storage/public/' . $img->image_path) }}" data-lightbox="{{$img->album_id}}" data-title="{{$img->image_name}}">
+                <img src="{{ asset('storage/public/' . $img->image_path) }}" width="30%">
             </a>
         </div>
 
@@ -32,9 +32,9 @@
                     </div>
 
                     @if (auth()->user()?->can('admin')) 
-                    <a href="/get/{{$img->image_path}}"
+                    {{-- <a href="{{route('downloadFile',substr($img->image_path,11))}}"
                         class="px-3 py-1"
-                        style="font-size: 20px"><button class="btn btn-primary">Download Image</button>
+                        style="font-size: 20px"><button class="btn btn-primary">Download Image</button> --}}
                     </a>
                     @endif
 

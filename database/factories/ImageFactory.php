@@ -17,7 +17,7 @@ class ImageFactory extends Factory
     {
         return [
             'image_name'=>$this->faker->name(),
-            'image_path'=>$this->faker->image('public/storage/thumbnails',640,480,false,null) ,
+            'image_path'=>$this->faker->image('public/storage/public',640,480,false,null) ,
             'user_id'=>User::factory(),
             'album_id'=>Album::factory(),
         ];

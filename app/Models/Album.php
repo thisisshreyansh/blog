@@ -21,4 +21,14 @@ class Album extends Model
         return $this->belongsTo(User::class,'user_id'); //user_id is forigen key if we give name author laravel think author forigenkey is author_id
     }
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, fn($query, $search) =>
+            $query->where(fn($query) =>
+                $query
+                    ->where('album_name', 'like', '%' . $search . '%')
+            )
+        );
+        
+    }
 }
