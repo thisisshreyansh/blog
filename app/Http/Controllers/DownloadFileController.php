@@ -25,11 +25,15 @@ class DownloadFileController extends Controller
    
         if ($zip->open(public_path().'/storage/public/album/'.$fileName, ZipArchive::CREATE) === TRUE)
         {
-            $files = File::files(public_path().'/storage/public/album/'.$id);
+            $files = Image::where('album_id','=',$id)->get();
+            // dd($files);
             foreach ($files as $img) {
-                $relativeNameInZipFile = $img->getRelativePathname();
-                $zip->addFile($img->getPathname(), $relativeNameInZipFile);
+                $image = public_path().'/storage/public/album/'.$id.'/images'.'/'.$img->image_path;
+
+                $zip->addFile($image,$img->image_path);
+                // dd($zip);
             }
+            // dd($zip);
             $zip->close();
             
         }
