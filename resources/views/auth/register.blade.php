@@ -15,10 +15,10 @@
                 <form method="POST" action="/register" class="mt-10">
                     @csrf
 
-                    <x-form.input name="name"  required />
-                    <x-form.input name="username" required />
-                    <x-form.input name="email"  type="email" required />
-                    <x-form.input name="password" type="password" autocomplete="new-password" required />
+                    <x-form.input name="name" val=" *" required />
+                    <x-form.input name="username" val=" *" required />
+                    <x-form.input name="email" val=" *" type="email" required />
+                    <x-form.input name="password" val=" *" type="password" autocomplete="new-password" required />
                     <br/>
                     <label class="block mb-2 text-xs text-red-500"
                         for="fields with * are mandatory"

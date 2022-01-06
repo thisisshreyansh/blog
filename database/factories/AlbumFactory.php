@@ -17,7 +17,7 @@ class AlbumFactory extends Factory
         return [
             'user_id'=>User::factory(),
             'album_name'=>$this->faker->name(),
-            'album_cover'=>$this->faker->image('public/storage/thumbnails',640,480,false,null) ,
+            'album_cover'=>$this->faker->image('public/storage/public',640,480,false,null) ,
             'public_status'=>"0",
         ];
     }

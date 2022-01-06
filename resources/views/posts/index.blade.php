@@ -8,18 +8,22 @@
             
                 <div class="lg:grid lg:grid-cols-6">
                     @foreach ($album as $alb) 
-                        @if ($alb->public_status != 0) 
+                        @if ($alb->public_status != 0 || $alb->user_id == Auth::id()) 
+                            <x-post_card 
+                                :alb="$alb" 
+                                class=" {{$loop->iteration<3 ? 'col-span-3':'col-span-2'}}"
+                            />
+                        @endif
+                    @endforeach
+
+                    @foreach ($shared as $alb) 
+                        @if ($alb->public_status != 1 || $alb->user_id != Auth::id())
                             <x-post_card 
                                 :alb="$alb" 
                                 class=" {{$loop->iteration<3 ? 'col-span-3':'col-span-2'}}"
                             />    
-                        @elseif ($alb->user_id == Auth::id()) 
-                            <x-post_card 
-                                :alb="$alb" 
-                                class=" {{$loop->iteration<3 ? 'col-span-3':'col-span-2'}}"
-                            />             
                         @endif
-                     @endforeach
+                    @endforeach
                 </div>
                     
             {{ $album->links() }}  
