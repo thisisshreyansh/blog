@@ -45,7 +45,7 @@
                     <h1 class="font-bold text-3xl lg:text-4xl mb-10">
                         {{$album->album_name}}
                     </h1>
-                    <img src= "{{ asset('storage/public/' .$album->album_cover) }}" alt="Images corresponding to album" class="rounded-xl" width="40%">
+                    <img src= "{{ asset('storage/public/album/'.$album->album_id.'/'. $album->album_cover) }}" alt="Images corresponding to album" class="rounded-xl" width="40%">
 
                     <a href="{{route('downloadAlbum',$album->album_id)}}"
                         class="px-3 py-1"

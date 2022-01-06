@@ -56,15 +56,18 @@ class AlbumController extends Controller
         return view('admin.posts.album');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        Album::create(array_merge($this->validatePost(), [
+        $album = Album::create(array_merge($this->validatePost(), [
             'album_name' => request('album_name'),
-            'album_cover' => request()->file('album_cover')->store('thumbnails'),
             'user_id' => request()->user()->id,
             'public_status' => request()->has('public_status')
         ]
         ));
+    
+        $album['album_cover'] = request()->file('album_cover')->storeAs('album/'.$album->album_id , $album['album_name'].'.png');
+        $album['album_cover'] = $album['album_name'].'.png';
+        $album->update();        
         return redirect('admin/posts')->with('success', 'Album Created');
     }
 
@@ -86,7 +89,8 @@ class AlbumController extends Controller
         $attributes['public_status'] = request()->has('public_status');
 
         if ($attributes['album_cover'] ?? false) {
-            $attributes['album_cover'] = request()->file('album_cover')->store('thumbnails');
+            $attributes['album_cover'] = request()->file('album_cover')->storeAs('album/'.$album->album_id , $attributes['album_name'].'.png');
+            $attributes['album_cover'] = $attributes['album_name'].'.png';
         }
 
         $album->update($attributes);

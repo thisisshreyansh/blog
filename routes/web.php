@@ -23,18 +23,9 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get('/', [AlbumController::class, 'index'])->name('home');
 Route::get('posts/{album:album_id}', [AlbumController::class, 'show']);
-
-// Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
-// Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
-
-// Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
-// Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
-
-// Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
-
  
-Route::get('get/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
-// Route::get('get/{album:album_id}', [DownloadFileController::class, 'downloadAlbum'])->name('downloadAlbum');
+Route::get('download/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
+Route::get('get/{album:album_id}', [DownloadFileController::class, 'downloadAlbum'])->name('downloadAlbum');
 
 Route::get('admin/posts', [AlbumController::class, 'adminindex'])->middleware('admin');
 Route::get('admin/posts/album', [AlbumController::class, 'album'])->middleware('admin');
@@ -44,7 +35,7 @@ Route::patch('admin/posts/{album:album_id}', [AlbumController::class, 'update'])
 Route::delete('admin/posts/{album:album_id}', [AlbumController::class, 'destroy'])->middleware('admin');
 
 Route::get('admin/posts/image', [ImageController::class, 'show'])->middleware('admin');
-Route::post('admin/posts/image', [ImageController::class, 'store'])->middleware('admin');
+Route::post('admin/posts/image', [ImageController::class, 'store'])->middleware('admin')->name('storeimage');
 Route::delete('posts/{image:album_id}', [ImageController::class, 'destroy'])->middleware('admin');
 
 Route::get('admin/posts/sharing', [SharedWithController::class, 'sharing'])->middleware('admin');
