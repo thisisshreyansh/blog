@@ -33,8 +33,8 @@ Route::get('posts/{album:album_id}', [AlbumController::class, 'show']);
 // Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
  
-// Route::get('get/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
-Route::get('get/{album:album_id}', [DownloadFileController::class, 'downloadAlbum'])->name('downloadAlbum');
+Route::get('get/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
+// Route::get('get/{album:album_id}', [DownloadFileController::class, 'downloadAlbum'])->name('downloadAlbum');
 
 Route::get('admin/posts', [AlbumController::class, 'adminindex'])->middleware('admin');
 Route::get('admin/posts/album', [AlbumController::class, 'album'])->middleware('admin');
