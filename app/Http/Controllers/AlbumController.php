@@ -19,19 +19,19 @@ class AlbumController extends Controller
     
     public function index()
     {
-        $sharedusers = Album::join('shared_withs', 'albums.album_id', '=', 'shared_withs.album_id')
+        $sharedusers = Album::join('shared_withs', 'albums.id', '=', 'shared_withs.album_id')
             ->where('shared_withs.user_id', '=', Auth::id())
             ->filter(
-                request(['search'])
+                request(['searchAlbum'])
                 )
             ->get();
 
         return view('posts.index', [
             'album' => Album::latest()
             ->filter(
-                request(['search'])
+                request(['searchAlbum'])
                 )
-                ->paginate(9)->withQueryString(),
+                ->paginate(10)->withQueryString(),
             'shared' => $sharedusers
             ]);
     }
@@ -47,7 +47,9 @@ class AlbumController extends Controller
     {
         return view('posts.image', [
             'album' => $album,
-            'image' => $image
+            'image' => Image::where('album_id','=',$album->id)
+                        ->paginate(9)->withQueryString(),
+            // 'searchimage'=> Image::filter(request(['searchImage']))
         ]);
     }
 
@@ -59,14 +61,14 @@ class AlbumController extends Controller
     public function store(Request $request)
     {
         $album = Album::create(array_merge($this->validatePost(), [
-            'album_name' => request('album_name'),
+            'name' => request('name'),
             'user_id' => request()->user()->id,
             'public_status' => request()->has('public_status')
         ]
         ));
     
-        $album['album_cover'] = request()->file('album_cover')->storeAs('album/'.$album->album_id , $album['album_name'].'.png');
-        $album['album_cover'] = $album['album_name'].'.png';
+        $album['path'] = request()->file('path')->storeAs('album/'.$album->id , $album['name'].'.png');
+        $album['path'] = $album['name'].'.png';
         $album->update();        
         return redirect('admin/posts')->with('success', 'Album Created');
     }
@@ -82,21 +84,20 @@ class AlbumController extends Controller
     public function update(Album $album)
     {
         $attributes = request()->validate([
-            'album_name' => 'required',
-            'album_cover' => 'image',
+            'name' => 'required',
+            'path' => 'image',
         ]);
 
         $attributes['public_status'] = request()->has('public_status');
 
-        if ($attributes['album_cover'] ?? false) {
-            $attributes['album_cover'] = request()->file('album_cover')->storeAs('album/'.$album->album_id , $attributes['album_name'].'.png');
-            $attributes['album_cover'] = $attributes['album_name'].'.png';
+        if ($attributes['path'] ?? false) {
+            $attributes['path'] = request()->file('path')->storeAs('album/'.$album->id , $attributes['name'].'.png');
+            $attributes['path'] = $attributes['name'].'.png';
         }
 
         $album->update($attributes);
-        back()->with('success', 'Album Updated!');
         
-        return redirect('/admin/posts');
+        return back()->with('success', 'Album Updated!');
         
     }
 
@@ -112,9 +113,34 @@ class AlbumController extends Controller
         $album ??= new Album();
 
         return request()->validate([
-            'album_name' => 'required',
-            'album_cover' => $album->exists ? ['image'] : ['required', 'image'],
+            'name' => 'required',
+            'path' => $album->exists ? ['image'] : ['required', 'image'],
         ]);
     }
 
+    public function myalbums()
+    {
+        return view('posts.myalbums', [
+            'myalbum' => Album::where('user_id', '=', Auth::id())
+            ->filter(
+                request(['searchAlbum'])
+                )
+                ->paginate(6)->withQueryString(),
+            ]);
+    }
+
+    public function sharedalbums()
+    {
+
+        return view('posts.sharedalbums', [
+            'album' => Album::latest()
+            ->filter(
+                request(['searchAlbum'])
+                )
+                ->paginate(10)->withQueryString(),
+            'shared' => Album::join('shared_withs', 'albums.id', '=', 'shared_withs.album_id')
+            ->join('users', 'albums.user_id', '=', 'users.id')
+            ->where('shared_withs.user_id', '=', Auth::id())->paginate(6)->withQueryString()
+            ]);
+    }
 }

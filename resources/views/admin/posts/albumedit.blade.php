@@ -1,15 +1,15 @@
 <x-layout>
-    <x-setting heading="Edit Album : {{$album->album_name}}">
-        <form method="POST" action="/admin/posts/{{$album->album_id}}" enctype="multipart/form-data">
+    <x-setting heading="Edit Album : {{$album->name}}">
+        <form method="POST" action="/admin/posts/{{$album->id}}" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
 
-            <x-form.input name="album_name" :value="old('album_name',$album->album_name)" required />
+            <x-form.input name="name" :value="old('name',$album->name)" required />
             <div class="flex mt-6">
                 <div class="flex-1">
-                    <x-form.input name="album_cover" type="file" :value="old('album_cover',$album->album_cover)" />
+                    <x-form.input name="path" type="file" :value="old('path',$album->path)" />
                 </div>
-                <img src="{{ asset('storage/public/album/'.$album->album_id.'/'. $album->album_cover) }}" alt=" album cover" class="rounded-xl ml-6" width="100">
+                <img src="{{ asset('storage/public/album/'.$album->id.'/'. $album->path) }}" alt=" album cover" class="rounded-xl ml-6" width="100">
             </div>
 
             <x-form.field>

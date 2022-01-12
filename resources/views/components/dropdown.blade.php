@@ -6,7 +6,7 @@
     </div>
 
     {{-- Links --}}
-    <div x-show="show" class="py-2 absolute bg-gray-100 mt-2 rounded-xl min-w-fit max-w-full z-50 overflow-auto max-h-52" style="display: none">
+    <div x-show="show" style ="background-color: rgb(243, 244, 246); width: -webkit-fill-available;" class="absolute mt-2 rounded-xl z-50 overflow-auto" style="display: none">
         {{ $slot }}
     </div>
 </div>

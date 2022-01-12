@@ -1,54 +1,53 @@
 @props(['img'])
-<article 
-    {{$attributes->merge(['class'=>'transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl'])}}>
-    <div class="py-6 px-5">
-        <div style="display: flex;flex-wrap: wrap;">
-            <a href="{{ asset('storage/public/album/'.$img->album_id.'/images'.'/'. $img->image_path) }}" data-lightbox="{{$img->album_id}}" data-title="{{$img->image_name}}">
-                <img src="{{ asset('storage/public/album/'.$img->album_id.'/thumbnails'.'/'. $img->thumbnails) }}" width="30%">
-            </a>
+<div style="
+padding-bottom: 10px;
+padding-top: 10px;
+">
+    <div style="display: flex;flex-wrap: wrap;">
+        <a href={{ asset('storage/public/album/'.$img->album_id.'/images'.'/'. $img->path) }} data-lightbox="{{$img->album_id}}" data-title="{{$img->name}}">
+        <img class="w-60 bg-cover" src="{{ asset('storage/public/album/'.$img->album_id.'/thumbnails'.'/'. $img->thumbnails) }}">
+        </a>
+    </div>
+    {{-- <div class="px-3 pb-2" style="padding: 10px;">
+      <div class="mb-2" style="text-align: -webkit-center;">
+        <div class="mb-2 text-sm ">
+            <span class="font-medium mr-2 text-capitalize"
+                style=" font-size: 24px; font-weight: bold; ">
+                {{$img->name}}
+            </span>
         </div>
+      </div>
+    </div> --}}
 
-        <div class="mt-8 flex flex-col justify-between">
-            <header>
-                <div class="mt-4">
-                    <h1 class="text-3xl">
-                        {{$img->image_name}}
-                    </h1>
-
-                    <span class="mt-2 block text-gray-400 text-xs">
-                        Published <time>{{$img->created_at->diffForHumans()}}</time>
-                    </span>
-                </div>
-            </header>
-
-
-            <footer class="flex justify-between items-center mt-8">
-                <div class="flex items-center text-sm">
-                    <img src="/images/lary-avatar.svg" alt="Lary avatar">
-                    <div class="ml-3">
-                        <h5 class="font-bold">
-                            {{$img->author->name}}
-                        </h5>
-                    </div>
-
-                    @if (auth()->user()?->can('admin')) 
-                        <a href="{{route('downloadFile',$img->image_path)}}"
-                            class="px-3 py-1"
-                            style="font-size: 20px">
-                            <button class="btn btn-primary">Download Image</button>
-                        </a>
-                    @endif
-
+    <div class="w-full flex justify-between">
+ 
+        <div class="dropdown">
+            <button  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-ellipsis-h pt-2 text-lg"></i>
+            </button>
+            
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
                     @if ($img->user_id === Auth::id())
-                        <form action="/posts/{{$img->album_id}}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                    <form action="/posts/{{$img->album_id}}"
+                    method="POST">
+                    @csrf
+                    @method('DELETE')
 
-                            <button class="text-red-500 hover:text-red-600">Delete</button>
-                        </form>
+                    <button class="text-red-500 hover:text-red-600 dropdown-item" style="font-size: 12px">Delete</button>
+                    
+                    </form>
                     @endif
-                </div>
-            </footer>
+                </li>
+                @if (auth()->user()?->can('admin')) 
+                    <li>
+                        <a href="{{route('downloadFile',$img->path)}}"
+                        class="px-3 py-1 dropdown-item" style="font-size: 12px">
+                            Download Image
+                        </a>
+                    </li>
+                @endif
+            </ul>
         </div>
     </div>
-</article>
+</div>

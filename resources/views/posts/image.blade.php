@@ -3,23 +3,6 @@
         <main class="max-w-6xl mx-auto mt-10 lg:mt-10 space-y-6">
             <article class="max-w-4xl mx-auto gap-x-10">
                 
-                <div class="col-span-4 lg:text-center lg:pt-5 mb-10">  
-                    <p class="mt-4 block text-gray-400 text-xs">
-                        Published <time>{{$album->created_at->diffForHumans()}}</time>
-                    </p>
-
-                    <div class="flex items-center lg:justify-center text-sm mt-4">
-                        <img src="/images/lary-avatar.svg" alt="Lary avatar">
-                        <div class="ml-3 text-left">
-                            <h5 class="font-bold">
-                                <a href="/?authors={{$album->author->username}}">
-                                    {{$album->author->name}}
-                                </a>
-                            </h5>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="col-span-8">
                     <div class="hidden lg:flex justify-between mb-6">
                         <a href="/"
@@ -34,47 +17,94 @@
                                 </g>
                             </svg>
 
-                            Back to Posts
+                            Back to Home
                         </a>
 
-                        {{-- <div class="space-x-1">
-                            <x-category-button :category="$post->category"/>
-                        </div> --}}
                     </div>
+                    
+                    <div>
+                        <div style="display: flex;
+                        justify-content: space-between;">
+                            <h1 class="font-bold lg:text-4xl mb-10 text-3xl text-capitalize">
+                                {{$album->name}}
+                            </h1>
+                            
+                            <a href="{{route('downloadAlbum',$album->id)}}"
+                                class="px-3 py-1"
+                                style="font-size: 20px"><button><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" color="black" class="bi bi-download" viewBox="0 0 16 16">
+                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                  </svg></button>
+                            </a>
+                        </div>
+                        <div class="flex">
+                            <p class="font-bold pr-4 text-capitalize text-secondary"><img class="radio-lg" src="/images/lary-avatar.svg" alt="Lary avatar"></p>
+                            <p class="font-bold pr-4 text-capitalize text-secondary">{{$album->author->name}}</p>
+                            <p class="text-gray-400 pt-2 text-xs">
+                                Published <time>{{$album->created_at->diffForHumans()}}</time>
+                            </p>
 
-                    <h1 class="font-bold text-3xl lg:text-4xl mb-10">
-                        {{$album->album_name}}
-                    </h1>
-                    <img src= "{{ asset('storage/public/album/'.$album->album_id.'/'. $album->album_cover) }}" alt="Images corresponding to album" class="rounded-xl" width="40%">
+                           <!-- Search-->
+                            <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
+                                <form method="GET" action="#">
+                                    <input type="text" name="searchImage" id="country"  placeholder="Search Image"
+                                            class="bg-transparent placeholder-black font-semibold text-sm"
+                                            value="{{request('searchImage')}}" autocomplete="off">
+                                </form>
+                            </div> 
+                            <div id="searchImage_list" class="w-max right-8 text-secondary" style=" position: absolute; "></div>
 
-                    <a href="{{route('downloadAlbum',$album->album_id)}}"
-                        class="px-3 py-1"
-                        style="font-size: 20px"><button class="btn btn-primary">Download Album</button>
-                    </a>
+                        </div>
+                    </div>
                 </div>
 
-                {{-- <section class="col-span-8 col-start-5 mt-10 space-y-6"> --}}
                 @if ($image->count())
-            
-                    <div style="display:flex ">
-                        @foreach ($image::all() as $img) 
-                            @if ($album->album_id == $img->album_id)
-                                {{-- @if ($img->user_id == Auth::id()) --}}
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+                        @foreach ($image as $img) 
+                            @if ($album->id == $img->album_id)
                                     <x-image_card 
                                         :img="$img" 
-                                        class="col-span-2"
                                     />   
-                                {{-- @endif     --}}
                             @endif            
                         @endforeach
+
+                        
                     </div>
-            
-                    {{-- {{ $image->links() }}   --}}
+                    {{ $image->links() }}
+        
                 @else
                     <p class="text-center">No Image In Album Please Check Back Later</p>
                 @endif
-                {{-- </section> --}}
+                
             </article>
         </main>
     </section>
 </x-layout>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#searchImage').on('keyup',function() {
+            var query = $(this).val(); 
+            $.ajax({
+                url:"{{ route('searchImage') }}",
+                type:"GET",
+                data:{'name':query},
+                success:function (data) {
+                    $('#searchImage_list').html(data);
+                }
+            })
+            // end of ajax call
+        });
+
+        
+        $(document).on('click', 'li', function(){
+            var value = $(this).text();
+            $('#searchImage').val(value);
+            $('#searchImage_list').html("");
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+</script>

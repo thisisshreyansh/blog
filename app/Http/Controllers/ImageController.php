@@ -12,11 +12,11 @@ use Intervention\Image\ImageManagerStatic;
 
 class ImageController extends Controller
 {
-    public function index()
+    public function index( ) 
     {
-        return view('posts.image', [
-            'image' => Image::latest()
-            ]);
+        return view('posts.image',[
+            'image' => Image::latest(),
+        ]);
     }
 
     public function show()
@@ -26,7 +26,7 @@ class ImageController extends Controller
 
     public function destroy( Image $image)
     {
-        $image->where('image_id',$image->image_id)->delete();
+        $image->where('id',$image->id)->delete();
 
         return back()->with('success', 'Image Deleted!');
     }
@@ -36,24 +36,24 @@ class ImageController extends Controller
         
         $this->validatePost();
             
-            $image_name = request('image_name');
+            $image_name = request('name');
             $user_id = request()->user()->id;
             $album_id = request('album_id');
-            $image_path = $request->file('image_path')->store('album/'.$request->album_id.'/images');
+            $image_path = $request->file('path')->store('album/'.$request->album_id.'/images');
 
             if (!file_exists(public_path().'/storage/public/album/'.$request->album_id.'/thumbnails')) {
                 mkdir(public_path().'/storage/public/album/'.$request->album_id.'/thumbnails', 0777, true);
             }
             Images::make(public_path().'/storage/public/'.$image_path)
-                            ->fit(100,100)
+                            ->resize(500,500)
                             ->save(public_path().'/storage/public/album/'.$album_id.'/thumbnails'.'/'.substr($image_path,-44));
             // dd($thumbnails);
             $save = new Image;
             $save->thumbnails = substr($image_path,-44);
-            $save->image_name = $image_name;
+            $save->name = $image_name;
             $save->user_id = $user_id;
             $save->album_id = $album_id;
-            $save->image_path = substr($image_path,-44);
+            $save->path = substr($image_path,-44);
             $save->save();
             
             
@@ -66,9 +66,9 @@ class ImageController extends Controller
         $image ??= new Image();
 
         return request()->validate([
-            'image_name' => 'required',
-            'image_path' => ['required', 'image'],
-            'album_id' => ['required', Rule::exists('albums', 'album_id')]
+            'name' => 'required',
+            'path' => ['required', 'image'],
+            'album_id' => ['required', Rule::exists('albums', 'id')]
         ]);
     }
 }

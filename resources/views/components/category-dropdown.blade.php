@@ -17,10 +17,10 @@
     @foreach (App\Models\Album::all() as $album)
         @if ($album->user_id == Auth::id() ||$album->public_status != 0)
             <x-dropdown-item
-            href="/posts/{{ $album->album_id }}"
-            :active='request()->fullUrlIs("/posts/{{ $album->album_id }}")'
+            href="/posts/{{ $album->id }}"
+            :active='request()->fullUrlIs("/posts/{{ $album->id }}")'
             >
-            {{ ucwords($album->album_name)}}
+            {{ ucwords($album->name)}}
             </x-dropdown-item>
         @endif
     @endforeach

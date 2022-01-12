@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Storage;
 class AlbumFactory extends Factory
 {
     /**
@@ -13,12 +13,16 @@ class AlbumFactory extends Factory
      * @return array
      */
     public function definition()
-    {
+    {   
+        $id = random_int(100, 1000);
+        $path = storage_path('app/public/album/'.$id);
+        Storage::makeDirectory('album/'.$id);
         return [
+            'id'=>$id,
             'user_id'=>User::factory(),
-            'album_name'=>$this->faker->name(),
-            'album_cover'=>$this->faker->image('public/storage/public',640,480,false,null) ,
-            'public_status'=>"0",
+            'name'=>$this->faker->name(),
+            'path'=>$this->faker->image($path,640,480,false,null) ,
+            'public_status'=>"1",
         ];
     }
 }

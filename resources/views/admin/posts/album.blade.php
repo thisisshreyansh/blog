@@ -3,8 +3,8 @@
         <form method="POST" action="/admin/posts/album" enctype="multipart/form-data">
             @csrf
 
-            <x-form.input name="album_name" required />
-            <x-form.input name="album_cover" type="file" required />
+            <x-form.input name="name" required />
+            <x-form.input name="path" type="file" required />
 
             <x-form.field>
                 <x-form.label name="public_status"/>

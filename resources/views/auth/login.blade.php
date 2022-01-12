@@ -1,74 +1,5 @@
-{{-- @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection --}}
-
-<x-layout>
+{{-- <x-layout>
     <section class="px-6 py-8">
         <main class="max-w-lg mx-auto mt-10">
             <x-panel>
@@ -80,7 +11,7 @@
                     <x-form.input name="email" type="email" autocomplete="username" required />
                     <x-form.input name="password" type="password" autocomplete="current-password" required />
                     @if (Route::has('password.request'))
-                        <a class="btn btn-link" href="{{ route('forget.password.get') }}">
+                        <a href="{{ route('forget.password.get') }}">
                             {{ __('Forgot Your Password?') }}
                         </a>
                     @endif
@@ -89,4 +20,64 @@
             </x-panel>
         </main>
     </section>
-</x-layout>
+</x-layout> --}}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    {{-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> --}}
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+    <link href="{{ URL::asset('css/login/style.css') }}" type="text/css" rel="stylesheet">
+ </head>
+  <body>
+    <div style="text-align: -webkit-center">
+        <a href="/">
+            <img src="../images/Imagger.png" alt="Home page logo" width="150">
+        </a>
+    </div>
+    <div class="container" style="margin-top: 71px;">
+      <div class="top-header">
+        <h3>Welcome back</h3>
+        <p>Enter your credentials to access your account</p>
+      </div>
+      <form method="POST" action="{{ route('login') }}">
+        @csrf
+        <div class="user">
+            <i class="bx bxl-gmail"></i>
+            <input type="text" name="email" placeholder="Enter your email" style="font-size: x-small;"/>
+           
+          </div>
+          <div class="pass">
+            <i class="bx bxs-lock-alt"></i>
+            <input type="password" name="password" placeholder="Enter your password" style="font-size: x-small;"/>
+            
+          </div>
+        <div class="btn">
+        <button>Sign in</button>
+      </div>
+      @error('email')
+        <p class="error">{{ $message }}</p>
+        @enderror
+        @error('password')
+        <p class="error" >{{ $message }}</p>
+        @enderror
+    </form>
+    </div>
+    <p class="last">Forgot your password? <a href="{{ route('forget.password.get') }}"> Reset Password </a></p>
+    <p class="last">New here. Click <a href="/register">Register </a></p>
+  </body>
+</html>
