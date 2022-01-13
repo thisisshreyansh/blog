@@ -23,8 +23,13 @@
                     <button type="submit" style="font-size: 12px"  class="text-red-500 hover:text-red-600 dropdown-item  show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
                   </form>
               </li>
-              <li><button class="dropdown-item" style="font-size: 12px" id="open-btn">Edit</button></li>
-              <li><button class="dropdown-item" style="font-size: 12px" id="open-share-btn">Share</button></li>
+              <li><button class="dropdown-item open-album" style="font-size: 12px" 
+                data-toggle="modal" data-target="#editModal" 
+                data-album-id="{{$alb->id}}" data-album-name="{{$alb->name}}" data-album-path="{{ asset('storage/public/album/'.$alb->id.'/'. $alb->path) }}" data-album-publicstatus="{{$alb->public_status}}"
+                >Edit</button></li>
+              <li><button class="dropdown-item open-share-btn" style="font-size: 12px"
+                data-share-id="{{$alb->id}}" data-toggle="modal" data-share-target="#shareModal" 
+                >Share</button></li>
             @endif
             <li><a class="dropdown-item" style="font-size: 12px" href="{{route('downloadAlbum',$alb->id)}}">Download</a></li>
             

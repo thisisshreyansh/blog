@@ -31,23 +31,24 @@ class ImageController extends Controller
         return back()->with('success', 'Image Deleted!');
     }
 
-    public function store(Request $request)
+    public function store(Request $request,Album $album)
     {
-        
-        $this->validatePost();
+        // dd($album->id);
+        // $this->validatePost();
             
             $image_name = request('name');
             $user_id = request()->user()->id;
             $album_id = request('album_id');
-            $image_path = $request->file('path')->store('album/'.$request->album_id.'/images');
+            $album_id = $album->id;
+            $image_path = $request->file('path')->store('album/'.$album_id.'/images');
 
-            if (!file_exists(public_path().'/storage/public/album/'.$request->album_id.'/thumbnails')) {
-                mkdir(public_path().'/storage/public/album/'.$request->album_id.'/thumbnails', 0777, true);
+            if (!file_exists(public_path().'/storage/public/album/'.$album_id.'/thumbnails')) {
+                mkdir(public_path().'/storage/public/album/'.$album_id.'/thumbnails', 0777, true);
             }
             Images::make(public_path().'/storage/public/'.$image_path)
                             ->resize(500,500)
                             ->save(public_path().'/storage/public/album/'.$album_id.'/thumbnails'.'/'.substr($image_path,-44));
-            // dd($thumbnails);
+            
             $save = new Image;
             $save->thumbnails = substr($image_path,-44);
             $save->name = $image_name;
@@ -58,7 +59,7 @@ class ImageController extends Controller
             
             
 
-        return redirect('admin/posts')->with('success', 'Image Added');
+        return back()->with('success', 'Image Added');
     }
 
     protected function validatePost(?Image $image= null): array

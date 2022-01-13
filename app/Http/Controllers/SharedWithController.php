@@ -12,7 +12,7 @@ class SharedWithController extends Controller
 {
     public function destroy( User $user)
     {
-        $revoke = SharedWith::where('user_id','=',$user->id)->delete();
+        SharedWith::where('user_id','=',$user->id)->delete();
         return back()->with('success', 'Sharing Revoked!');
     }
 

@@ -37,7 +37,7 @@ Route::patch('admin/posts/{album:id}', [AlbumController::class, 'update'])->midd
 Route::delete('admin/posts/{album:id}', [AlbumController::class, 'destroy'])->middleware('admin');
 
 Route::get('admin/posts/image', [ImageController::class, 'show'])->middleware('admin');
-Route::post('admin/posts/image', [ImageController::class, 'store'])->middleware('admin')->name('storeimage');
+Route::post('add/posts/{album:id}/image', [ImageController::class, 'store'])->middleware('admin')->name('storeimage');
 Route::delete('posts/{image:id}', [ImageController::class, 'destroy'])->middleware('admin');
 
 Route::get('admin/posts/sharing', [SharedWithController::class, 'sharing'])->middleware('admin');

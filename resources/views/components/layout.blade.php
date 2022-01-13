@@ -54,19 +54,7 @@
                         >
                             Log Out
                         </x-dropdown-item>
-                        {{-- @if (auth()->user()?->can('admin'))                        
-                            <x-dropdown-item href="/admin/posts/image" :active="request()->is('/admin/posts/image')">
-                                New Image
-                            </x-dropdown-item>
 
-                            <x-dropdown-item href="/admin/posts/album" :active="request()->is('/admin/posts/album')">
-                                New Album
-                            </x-dropdown-item>
-
-                            <x-dropdown-item href="/admin/posts" :active="request()->is('/admin/posts')">
-                                Dashboard
-                            </x-dropdown-item>
-                        @endif --}}
                         @if (auth()->user()?->can('admin'))                        
                             <x-dropdown-item href="/">
                                All Albums
@@ -115,64 +103,140 @@
 
         {{$slot}}
 
-        {{-- <footer class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
-            <img src="/images/lary-newsletter-icon.svg" alt="" class="mx-auto -mb-6" style="width: 145px;">
-            <h5 class="text-3xl">Stay in touch with the latest posts</h5>
-            <p class="text-sm mt-3">Promise to keep the inbox clean. No bugs.</p>
-        </footer> --}}
     </section>
     @if (session('status'))
    <p class="alert alert-success">{{ session('status') }}</p>
-@endif
+    @endif
     <x-flash/>
 
-    
+    @include('components.modal.newalbum')
+
+    @include('components.modal.edit')
+    @include('components.modal.sharing')
 </body>
+
+{{-- edit album --}}
 <script>
-    var modals = document.getElementById("my-modal");
+    $('.open-album').click(function() {
+
+        var id = $(this).data('album-id');   
+        var name = $(this).data('album-name'); 
+        var path = $(this).data('album-path');   
+        var publicstatus = $(this).data('album-publicstatus');   
+        var editmodal = $(this).data('target');
+
+        var albid = $('#id').val(id); 
+        var albname = $('#name').val(name);
+        var albpath = $('#currentimage').attr("src",path);
+
+        if(publicstatus == 1){
+            var albstatus = $('#public_status').prop( "checked", true );
+        }
+        else{
+            var albstatus = $('#public_status').prop( "checked", false );
+        }
+
+        // $.ajax({
+        //   url: '/admin/posts/'+id,
+        //   type:"PATCH",
+        //   data:{
+        //     "_token": "{{ csrf_token() }}",
+        //     id:albid,
+        //     name:albname,
+        //     path:albpath,
+        //     public_status:albstatus,
+        //   },
+        //   success:function(response){
+        //     console.log(response);
+        //     if (response) {
+        //       console.log('success');
+        //     }
+        //   }
+        //  });
+        
+        $('#formaction').attr("action",'/admin/posts/'+id);
+        $(editmodal).css("display", "block")
+        } );
+
+    $('#close-btn').click(function() {
+        var editmodal = document.getElementById("editModal");
+        $(editmodal).css("display", "none")
+    });
+</script>
+
+{{-- add sharing --}}
+<script>
+    $('.open-share-btn').click(function() {
+        // ajax form
+        var id = $(this).data('share-id');   
+        console.log(id);
+        var sharemodal = $(this).data('share-target');
+
+        $('#id').val(id); 
+        $('#formshareaction').attr("action",'admin/posts/sharing/'+id);
+        $(sharemodal).css("display", "block")
+        // call a function fetch sharing with a ajax call with response json
+        // for delete a set data attribute and use those when called 
+        } );
+
+    $('#close-shairng-btn').click(function() {
+        // console.log('test');
+        var sharemodal = document.getElementById("shareModal");
+        $(sharemodal).css("display", "none")
+    });
+
+</script>
+
+{{-- add album --}}
+<script>
+    var modalalbum = document.getElementById("my-album-modal");
     
-    var btns = document.getElementById("open-btn");
+    var btnalbum = document.getElementById("addalbum");
   
-    var buttons = document.getElementById("ok-btn");
+    var buttonalbum = document.getElementById("ok-album-btn");
   
     // We want the modal to open when the Open button is clicked
-    btns.onclick = function() {
-    modals.style.display = "block";
+    btnalbum.onclick = function() {
+        modalalbum.style.display = "block";
     }
     // We want the modal to close when the OK button is clicked
-    buttons.onclick = function() {
-    modals.style.display = "none";
+    buttonalbum.onclick = function() {
+        modalalbum.style.display = "none";
     }
   
     // The modal will close when the user clicks anywhere outside the modal
     window.onclick = function(event) {
-        if (event.target == modals) {
-            modals.style.display = "none";
+        if (event.target == modalalbum) {
+            modalalbum.style.display = "none";
+        }
+    }
+</script>
+
+ {{-- add image --}}
+ <script>
+    var modalimage = document.getElementById("my-image-modal");
+    
+    var btnimage = document.getElementById("addimage");
+  
+    var buttonimage = document.getElementById("ok-image-btn");
+  
+    // We want the modal to open when the Open button is clicked
+    btnimage.onclick = function() {
+        modalimage.style.display = "block";
+    }
+    // We want the modal to close when the OK button is clicked
+    buttonimage.onclick = function() {
+        modalimage.style.display = "none";
+    }
+  
+    // The modal will close when the user clicks anywhere outside the modal
+    window.onclick = function(event) {
+        if (event.target == modalimage) {
+            modalimage.style.display = "none";
         }
     }
   </script>
 
-<script>
-    var modalsharing = document.getElementById("my-sharing-modal");
-    
-    var btnsharing = document.getElementById("open-share-btn");
-  
-    var buttonsharing = document.getElementById("ok-shairng-btn");
-  
-    // We want the modal to open when the Open button is clicked
-    btnsharing.onclick = function() {
-    modalsharing.style.display = "block";
-    }
-    // We want the modal to close when the OK button is clicked
-    buttonsharing.onclick = function() {
-    modalsharing.style.display = "none";
-    }
-  
-    // The modal will close when the user clicks anywhere outside the modal
-    window.onclick = function(event) {
-        if (event.target == modalsharing) {
-            modalsharing.style.display = "none";
-        }
-    }
-  </script>
+
+{{-- ajax will be called on update click --}}
     

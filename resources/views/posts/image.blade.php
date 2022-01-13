@@ -73,12 +73,14 @@
                     {{ $image->links() }}
         
                 @else
-                    <p class="text-center">No Image In Album Please Check Back Later</p>
+                    <p class="text-center pt-20">No Image In Album Please Check Back Later</p>
                 @endif
                 
             </article>
         </main>
     </section>
+    <button class="bg-red-400 fixed-bottom font-bold m-10 p-3.5 rounded-full shadow" id="addimage"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    @include('components.modal.newimage')
 </x-layout>
 
 <script type="text/javascript">

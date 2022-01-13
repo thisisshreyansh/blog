@@ -5,13 +5,12 @@
     <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
         @if ($myalbum->count())      
                 <div class="lg:grid lg:grid-cols-2">
+                    {{-- {{dd($myalbum)}} --}}
                     @foreach ($myalbum as $alb) 
-                        @if ($alb->user_id == Auth::id()) 
+                        @if ($alb->user_id == Auth::id())
                             <x-post_card 
                                 :alb="$alb"
                             />
-                            @include('components.modal.edit')
-                            @include('components.modal.sharing')
                         @endif
                     @endforeach
                 </div>
@@ -22,4 +21,5 @@
 
     </main>
 
+    <button class="bg-red-400 fixed-bottom font-bold m-10 p-3.5 rounded-full shadow" id="addalbum"><i class="fa fa-plus" aria-hidden="true"></i></button>
 </x-layout>

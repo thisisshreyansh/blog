@@ -1,58 +1,47 @@
 <div
 	class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
-	id="my-sharing-modal">
+	id="shareModal">
     <div class="bg-white ml-96 mt-36 p-6 w-5/12">
-        <span class="font-bold text-sm">Album Sharing for {{$alb->name}}</span>
-        <button id="ok-shairng-btn" class="float-end font-bold text-gray-400 text-sm">X</button>
+        <div>
+            <span class="font-bold text-secondary uppercase">Share Album</span>
+            <button id="close-shairng-btn" class="float-end font-bold text-red-600 text-sm">X</button>
+        </div>
+        
 	    <div >
 	    	<div >
-                <form method="POST" action="/admin/posts/sharing/{{$alb->id}}" enctype="multipart/form-data">
+                <form method="POST" action="" enctype="multipart/form-data" id="formshareaction">
                     @csrf
-
                         <x-form.input name="User" type="email" required />
-
                     <x-form.button>Share</x-form.button>
                 </form>
 
-            <div>
-                <table>
-                    <tbody>
-                @foreach (App\Models\SharedWith::where('album_id','=',$alb->id)
-                                     ->join('users', 'user_id', '=', 'users.id')
-                                     ->get()
+            <div class="sharedpersonslist">
+
+                {{-- @foreach (App\Models\SharedWith::where('album_id','=',$alb->id) 
+                ->join('users', 'user_id', '=', 'users.id')->get()
                                       as $su)
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
-                            <div class="text-sm font-medium text-gray-900">
-                                <a href="/posts/{{$su->id}}">
-                                    {{$su->name}}
-                                </a>
+                                <div class="text-sm font-medium text-gray-900">
+                                    {{$su->name}} 
+                                </div>
                             </div>
-                            </div>
-                        </td>
 
-                        <td class="px-6 py-4 whitespace-nowrap">
+
                             <div class="flex items-center">
-                            <div class="text-sm font-medium text-gray-900">
-                                {{$su->email}}
+                                <div class="text-sm font-medium text-gray-900">
+                                   {{$su->email}}
+                                </div>
                             </div>
-                            </div>
-                        </td>
-                        
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <form action="/removesharing/{{$su->id}}" method="POST">
-                            @csrf
-                            @method('DELETE')
 
-                            <button class="text-red-500 hover:text-red-600">Delete</button>
-                            
-                            </form>
-                        </td>
-                    </tr>
-              @endforeach
-                    </tbody>
-            </table>
+                            <div>
+                                <form action="/removesharing/{{$su->id}}" method="POST">
+                                    @csrf
+                                    @method('DELETE') 
+                                    <button class="text-red-500 hover:text-red-600">Delete</button>
+                                </form>
+                            </div>
+                @endforeach --}}
+
             </div>
             </div>
         </div>
@@ -70,4 +59,6 @@
     place holder for sharing input
 
     share button at bottom right
+
+    sharing api for calling shared person
     --}}
