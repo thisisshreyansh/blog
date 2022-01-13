@@ -55,14 +55,9 @@
                 <form method="POST" action="{{ route('forget.password.post') }}" class="mt-10">
                     @csrf
 
-                    <x-form.input name="email"  type="email" required />
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <x-form.button>Send Password Reset Link</x-form.button>
+                    <x-form.input name="email"  type="email" placeholder="Enter your email" val="*" required />
+                    <div class="text-center"><x-form.button>Send Password Reset Link</x-form.button></div>
+                    
                 </form>
             </x-panel>
         </main>

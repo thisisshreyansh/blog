@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
+    // remove mustverify email if you want register without verification
     use HasApiTokens, HasFactory, Notifiable;
 
     /**

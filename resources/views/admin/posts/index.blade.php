@@ -12,18 +12,18 @@
                               <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                   <div class="text-sm font-medium text-gray-900">
-                                      <a href="/posts/{{$album->album_id}}">
-                                          {{$album->album_name}}
+                                      <a href="/posts/{{$album->id}}">
+                                          {{$album->name}}
                                       </a>
                                   </div>
                                 </div>
                               </td>
                               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="/admin/posts/{{$album->album_id}}/edit" class="text-blue-500 hover:text-blue-600">Edit</a>
+                                <a href="/admin/posts/{{$album->id}}/edit" class="text-blue-500 hover:text-blue-600">Edit</a>
                               </td>
                               
                               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <form action="/admin/posts/{{$album->album_id}}" method="POST">
+                                <form action="/admin/posts/{{$album->id}}" method="POST">
                                   @csrf
                                   @method('DELETE')
 

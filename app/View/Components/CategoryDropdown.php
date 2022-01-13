@@ -12,7 +12,7 @@ class CategoryDropdown extends Component
     {
         return view('components.category-dropdown',[
             'categories' => Album::where('public_status','1')->orWhere('user_id',Auth::id()),
-            'currentCategory' => Album::firstWhere('album_name',request('category'))
+            'currentCategory' => Album::firstWhere('name',request('category'))
         ]);
     }
 }

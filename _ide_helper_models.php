@@ -14,10 +14,10 @@ namespace App\Models{
 /**
  * App\Models\Album
  *
- * @property int $album_id
+ * @property int $id
  * @property int $user_id
- * @property string $album_name
- * @property string|null $album_cover
+ * @property string $name
+ * @property string|null $path
  * @property string $public_status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -27,10 +27,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Album newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Album newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Album query()
- * @method static \Illuminate\Database\Eloquent\Builder|Album whereAlbumCover($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Album whereAlbumId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Album whereAlbumName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Album whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Album whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Album whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Album wherePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Album wherePublicStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Album whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Album whereUserId($value)
@@ -42,9 +42,10 @@ namespace App\Models{
 /**
  * App\Models\Image
  *
- * @property int $image_id
- * @property string $image_name
- * @property string|null $image_path
+ * @property int $id
+ * @property string $name
+ * @property string|null $path
+ * @property string|null $thumbnails
  * @property int $user_id
  * @property int $album_id
  * @property string|null $deleted_at
@@ -59,9 +60,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereAlbumId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereImageId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereImageName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereImagePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereThumbnails($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUserId($value)
  */

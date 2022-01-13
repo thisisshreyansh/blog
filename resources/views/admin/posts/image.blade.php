@@ -3,8 +3,8 @@
         <form method="POST" action="/admin/posts/image" enctype="multipart/form-data">
             @csrf
 
-            <x-form.input name="image_name" required />
-            <x-form.input name="image_path" type="file" required />
+            <x-form.input name="name" required />
+            <x-form.input name="path" type="file" required />
 
             <x-form.field>
                 <x-form.label name="album"/>
@@ -14,9 +14,9 @@
                     @foreach (\App\Models\Album::all() as $album)
                         @if ($album->user_id === Auth::id())
                         <option
-                            value="{{ $album->album_id }}"
-                            {{ old('album_id') == $album->album_id ? 'selected' : '' }}
-                        >{{ ucwords($album->album_name) }}</option>
+                            value="{{ $album->id }}"
+                            {{ old('album_id') == $album->id ? 'selected' : '' }}
+                        >{{ ucwords($album->name) }}</option>
                         @endif
                     @endforeach
                 </select>

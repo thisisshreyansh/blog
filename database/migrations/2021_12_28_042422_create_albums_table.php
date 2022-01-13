@@ -14,10 +14,10 @@ class CreateAlbumsTable extends Migration
     public function up()
     {
         Schema::create('albums', function (Blueprint $table) {
-            $table->id('album_id');
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();;
-            $table->string('album_name');
-            $table->string('album_cover')->nullable();
+            $table->id('id'); //album_id
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('name'); //album_name
+            $table->string('path')->nullable(); //album_cover
             $table->string('public_status');
             $table->timestamps();
         });
