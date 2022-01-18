@@ -30,5 +30,6 @@
         @endif
 
     </main>
-    <button class="bg-red-400 fixed-bottom font-bold m-10 p-3.5 rounded-full shadow" id="addalbum"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    <button class="bg-blue-400 fixed-bottom font-bold m-10 p-3.5 rounded-full shadow" id="addalbum"><i class="fa fa-plus" aria-hidden="true"></i></button>
 </x-layout>
+<script type="text/javascript" src="{{ URL::asset('css/modals/sharing.js') }}"></script>

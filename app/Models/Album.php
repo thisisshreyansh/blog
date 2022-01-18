@@ -23,10 +23,10 @@ class Album extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        $query->when($filters['searchImage'] ?? false, fn($query, $searchImage) =>
+        $query->when($filters['searchAlbum'] ?? false, fn($query, $searchAlbum) =>
             $query->where(fn($query) =>
                 $query
-                    ->where('name', 'like', '%' . $searchImage . '%')
+                    ->where('name', 'like', '%' . $searchAlbum . '%')
             )
         );
         

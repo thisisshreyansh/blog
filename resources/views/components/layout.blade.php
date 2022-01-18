@@ -19,7 +19,7 @@
       integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
       crossorigin="anonymous"
     />
-  
+    <link href="{{ URL::asset('css/layout/layout.css') }}" type="text/css" rel="stylesheet">
     <style>
         a{
             text-decoration: none; 
@@ -104,9 +104,6 @@
         {{$slot}}
 
     </section>
-    @if (session('status'))
-        <p class="alert alert-success">{{ session('status') }}</p>
-    @endif
     <x-flash/>
 
     @include('components.modal.newalbum')
@@ -114,144 +111,9 @@
     @include('components.modal.sharing')
 </body>
 
-{{-- edit album --}}
-<script>
-    $('.open-album').click(function() {
-
-        var id = $(this).data('album-id');   
-        var name = $(this).data('album-name'); 
-        var path = $(this).data('album-path');   
-        var publicstatus = $(this).data('album-publicstatus');   
-        var editmodal = $(this).data('target');
-
-        var albid = $('#id').val(id); 
-        var albname = $('#name').val(name);
-        var albpath = $('#currentimage').attr("src",path);
-
-        if(publicstatus == 1){
-            var albstatus = $('#public_status').prop( "checked", true );
-        }
-        else{
-            var albstatus = $('#public_status').prop( "checked", false );
-        }
-
-        // $.ajax({
-        //   url: '/admin/posts/'+id,
-        //   type:"PATCH",
-        //   data:{
-        //     "_token": "{{ csrf_token() }}",
-        //     id:albid,
-        //     name:albname,
-        //     path:albpath,
-        //     public_status:albstatus,
-        //   },
-        //   success:function(response){
-        //     console.log(response);
-        //     if (response) {
-        //       console.log('success');
-        //     }
-        //   }
-        //  });
-        
-        $('#formaction').attr("action",'/update/album/'+id);
-        $(editmodal).css("display", "block")
-        } );
-
-    $('#close-btn').click(function() {
-        var editmodal = document.getElementById("editModal");
-        $(editmodal).css("display", "none")
-    });
-</script>
-
-{{-- add sharing --}}
-<script>
-
-    $('.open-share-btn').click(function() {
-        // ajax form
-        var id = $(this).data('share-id');   
-        // console.log(id);
-        var sharemodal = $(this).data('share-target');
-
-        $('#id').val(id); 
-        $('#formshareaction').attr("action",'album/sharing/'+id);
-        $(sharemodal).css("display", "block")
-        // call a function fetch sharing with a ajax call with response json
-        // for delete a set data attribute and use those when called 
-
-        $.getJSON( "sharing-list/"+id, function(data){
-            console.log(data);
-            var sharinglist = [];
-            $.each(data, function(key,value){
-                
-                for (var i = 0; i < value.length; i++) {
-                    sharinglist.push("<li>Username : "+value[i].username+" Name : "+value[i].name+
-                        "<div><form action=/removesharing/"+value[i].id+ 
-                            " method='POST'> <button class='text-red-500 hover:text-red-600'>Delete</button> </form> </div> </li>")
-                }
-            });
-            $(".sharingdata").html(sharinglist);
-        });
-
-        } );
-
-    $('#close-shairng-btn').click(function() {
-        // console.log('test');
-        var sharemodal = document.getElementById("shareModal");
-        $(sharemodal).css("display", "none")
-    });
-
-</script>
-
-{{-- add album --}}
-<script>
-    var modalalbum = document.getElementById("my-album-modal");
-    
-    var btnalbum = document.getElementById("addalbum");
-  
-    var buttonalbum = document.getElementById("ok-album-btn");
-  
-    // We want the modal to open when the Open button is clicked
-    btnalbum.onclick = function() {
-        modalalbum.style.display = "block";
-    }
-    // We want the modal to close when the OK button is clicked
-    buttonalbum.onclick = function() {
-        modalalbum.style.display = "none";
-    }
-  
-    // The modal will close when the user clicks anywhere outside the modal
-    window.onclick = function(event) {
-        if (event.target == modalalbum) {
-            modalalbum.style.display = "none";
-        }
-    }
-</script>
-
- {{-- add image --}}
- <script>
-    var modalimage = document.getElementById("my-image-modal");
-    
-    var btnimage = document.getElementById("addimage");
-  
-    var buttonimage = document.getElementById("ok-image-btn");
-  
-    // We want the modal to open when the Open button is clicked
-    btnimage.onclick = function() {
-        modalimage.style.display = "block";
-    }
-    // We want the modal to close when the OK button is clicked
-    buttonimage.onclick = function() {
-        modalimage.style.display = "none";
-    }
-  
-    // The modal will close when the user clicks anywhere outside the modal
-    window.onclick = function(event) {
-        if (event.target == modalimage) {
-            modalimage.style.display = "none";
-        }
-    }
-  </script>
-
+<script type="text/javascript" src="{{ URL::asset('css/modals/editalbum.js') }}"></script> 
+<script type="text/javascript" src="{{ URL::asset('css/modals/sharing.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/layout/addalbum.js') }}"></script>
 
 {{-- ajax will be called on update click --}}
     

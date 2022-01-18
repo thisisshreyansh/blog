@@ -27,15 +27,15 @@ Route::get('album/image/{id}/download', [DownloadFileController::class, 'downloa
 
 Route::post('create/album', [AlbumController::class, 'store'])->middleware('admin')->name('createalbum');
 Route::patch('update/album/{album:id}', [AlbumController::class, 'update'])->middleware('admin');
-Route::delete('delete/album/{album:id}', [AlbumController::class, 'destroy'])->middleware('admin');
+Route::delete('delete/album/{album:id}', [AlbumController::class, 'destroy'])->middleware('admin')->name('deletealbum');
 
 
 Route::post('add/album/{album:id}/image', [ImageController::class, 'store'])->middleware('admin')->name('storeimage');
 Route::delete('album/image/{image:album_id}', [ImageController::class, 'destroy'])->middleware('admin')->name('destoryimage');
 
 
-Route::post('album/sharing/{album:id}', [SharedWithController::class, 'store'])->middleware('admin')->name('albumsharing');
-Route::get('albums/sharing-list/{album:id}', [SharedWithController::class, 'index'])->middleware('admin');
+Route::post('albums/sharing/{album:id}', [SharedWithController::class, 'store'])->middleware('admin')->name('album.sharing');
+Route::get('albums/sharing-list/{album:id}', [SharedWithController::class, 'index'])->middleware('admin')->name('sharing.list');
 Route::delete('removesharing/{user:id}', [SharedWithController::class, 'destroy'])->middleware('admin')->name('revoke.sharing');
 
 //verification for auth routes

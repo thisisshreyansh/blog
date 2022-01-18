@@ -54,6 +54,7 @@
         @error('password')
         <p class="error" >{{ $message }}</p>
         @enderror
+      
     </form>
     </div>
     <p class="last">Have a Account. Click here to <a href="/login">Login </a></p>

@@ -1,6 +1,6 @@
 <div
-	class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="editModal">
-    <div class="bg-white ml-96 mt-36 p-6 w-5/12">
+	class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full cssmodal" id="editModal">
+    <div class="bg-white ml-96 mt-32 p-6 rounded-2xl w-5/12">
 	    <div >
 	    	<div >
                 <div>

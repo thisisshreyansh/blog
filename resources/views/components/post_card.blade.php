@@ -1,6 +1,6 @@
 @props(['alb'])
 
-<div class="ml-10 mr-10">
+<div class="flex flex-col justify-between ml-10 mr-10">
     <div class="w-full flex justify-between p-3">
       <div class="flex">
         <div class="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden">
@@ -16,7 +16,7 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             @if ($alb->user_id === Auth::id())
               <li>    
-                  <form action="delete/album/{{$alb->id}}" method="POST">
+                  <form action={{ route('deletealbum', $alb->id ) }} method="POST">
                   @csrf
                   @method('DELETE')
 

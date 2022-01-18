@@ -69,30 +69,25 @@ class ImageController extends Controller
 
     public function searchImage(Request $request){
         
-        if($request->ajax()) {
-          
-            $data = Image::where('name', 'LIKE', '%'.$request->name.'%')
-                        ->where('album_id','LIKE','%'.$request->album_id.'%')
-                ->get();
-           
-            $output = '';
-           
-            if (count($data)>0) {
-              
-                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
-              
-                foreach ($data as $row){
-                   
+        if($request->ajax()) { 
+            $name = $request->name;
+            $data = Image::where('name', 'LIKE', '%'.$name.'%')
+                        ->select('name')
+                        ->selectRaw('count(`name`) as `occurences`')
+                        ->groupBy('name')
+                        ->get(); 
+            $output = ''; 
+            if (count($data)>0) { 
+                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">'; 
+                foreach ($data as $row){ 
                     $output .= '<li class="list-group-item">'.$row->name.'</li>';
-                }
-              
+                } 
                 $output .= '</ul>';
             }
-            else {
-             
+            else { 
                 $output .= '<li class="list-group-item">'.'No results'.'</li>';
             }
-           
+            
             return $output;
         }
     }

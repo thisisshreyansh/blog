@@ -40,9 +40,10 @@ class AlbumController extends Controller
     {
         return view('posts.image', [
             'album' => $album,
-            'image' => Image::where('album_id','=',$album->id)
+            'image' => Image::where('album_id','=',$album->id)->filter(
+                            request(['searchImage'])
+                            )
                         ->paginate(9)->withQueryString(),
-            // 'searchimage'=> Image::filter(request(['searchImage']))
         ]);
     }
 
@@ -126,29 +127,22 @@ class AlbumController extends Controller
 
     public function searchAlbum(Request $request){
         
-        if($request->ajax()) {
-          
+        if($request->ajax()) { 
             $data = Album::where('name', 'LIKE', $request->name.'%')
-                ->get();
-           
-            $output = '';
-           
-            if (count($data)>0) {
-              
-                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
-              
-                foreach ($data as $row){
-                   
+                        ->select('name')
+                        ->selectRaw('count(`name`) as `occurences`')
+                        ->groupBy('name')->get();
+            $output = ''; 
+            if (count($data)>0) { 
+                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">'; 
+                foreach ($data as $row){ 
                     $output .= '<li class="list-group-item">'.$row->name.'</li>';
-                }
-              
+                } 
                 $output .= '</ul>';
             }
-            else {
-             
+            else { 
                 $output .= '<li class="list-group-item">'.'No results'.'</li>';
-            }
-           
+            } 
             return $output;
         }
     }

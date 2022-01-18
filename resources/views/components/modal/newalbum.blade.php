@@ -1,7 +1,7 @@
 <div
-	class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+	class="fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full cssmodal"
 	id="my-album-modal">
-    <div class="bg-white ml-96 mt-36 p-6 w-5/12">
+    <div class="bg-white ml-96 mt-36 rounded-2xl p-6 w-5/12">
 	    <div >
 	    	<div >
                 <div>

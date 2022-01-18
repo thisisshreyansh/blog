@@ -35,7 +35,7 @@ class SharedWithController extends Controller
             ->where('albums.id','=',$album->id)
             ->join('shared_withs', 'albums.id', '=','shared_withs.album_id')
             ->join('users', 'shared_withs.user_id', '=', 'users.id')
-            ->select('users.username', 'users.name','users.id')
+            ->select('users.username', 'users.name','users.id','users.email')
             ->get();
         return response()->json([
             'shareduser'=> $sharedusers

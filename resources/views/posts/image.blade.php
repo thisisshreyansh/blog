@@ -37,23 +37,26 @@
                                   </svg></button>
                             </a>
                         </div>
-                        <div class="flex">
-                            <p class="font-bold pr-4 text-capitalize text-secondary"><img class="radio-lg" src="/images/lary-avatar.svg" alt="Lary avatar"></p>
+                        <div class="flex justify-between">
+                            <div class="flex">
+                            <p class="font-bold pr-4 text-capitalize text-secondary"><img class="radio-lg bg-blue-500 h-8 radio-lg rounded-full w-8" src="/images/lary-avatar.svg" alt="Lary avatar"></p>
                             <p class="font-bold pr-4 text-capitalize text-secondary">{{$album->author->name}}</p>
                             <p class="text-gray-400 pt-2 text-xs">
                                 Published <time>{{$album->created_at->diffForHumans()}}</time>
                             </p>
-
+                            </div>
                            <!-- Search-->
-                            <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
-                                <form method="GET" action="#">
-                                    <input type="text" name="searchImage" id="country"  placeholder="Search Image"
-                                            class="bg-transparent placeholder-black font-semibold text-sm"
-                                            value="{{request('searchImage')}}" autocomplete="off">
-                                </form>
-                            </div> 
-                            <div id="searchImage_list" class="w-max right-8 text-secondary" style=" position: absolute; "></div>
-
+                           <div class="flex">
+                                <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
+                                    <form method="GET" action="#">
+                                        <input type="text" name="searchImage" id="searchImage"  placeholder="Search Image"
+                                                class="bg-transparent placeholder-black font-semibold text-sm"
+                                                data-searchimage-id = {{$album->id}}
+                                                value="{{request('searchImage')}}" autocomplete="off">
+                                    </form>
+                                </div> 
+                                <div id="searchImage_list" class="h-20 overflow-auto mt-12 text-secondary w-max" style=" position: absolute; "></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -79,34 +82,9 @@
             </article>
         </main>
     </section>
-    <button class="bg-red-400 fixed-bottom font-bold m-10 p-3.5 rounded-full shadow" id="addimage"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    <button class="bg-blue-400 fixed-bottom font-bold m-10 p-3.5 rounded-full shadow" id="addimage"><i class="fa fa-plus" aria-hidden="true"></i></button>
     @include('components.modal.newimage')
 </x-layout>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#searchImage').on('keyup',function() {
-            var query = $(this).val(); 
-            $.ajax({
-                url:"{{ route('searchImage') }}",
-                type:"GET",
-                data:{'name':query},
-                success:function (data) {
-                    $('#searchImage_list').html(data);
-                }
-            })
-            // end of ajax call
-        });
-
-        
-        $(document).on('click', 'li', function(){
-            var value = $(this).text();
-            $('#searchImage').val(value);
-            $('#searchImage_list').html("");
-        });
-    });
-</script>
-
-<script type="text/javascript">
-    $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-</script>
+<script type="text/javascript" src="{{ URL::asset('js/layout/autosuggestimage.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/layout/addimage.js') }}"></script>
