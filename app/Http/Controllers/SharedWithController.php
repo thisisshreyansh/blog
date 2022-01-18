@@ -21,35 +21,25 @@ class SharedWithController extends Controller
         $email = request($user->email);
         $userid = User::where('email','=',$email->User)->get();
 
-        $sharedusers = Album::where('albums.user_id','=',Auth::id())
-            ->join('shared_withs', 'albums.id', '=', 'shared_withs.album_id')
-            ->join('users', 'shared_withs.user_id', '=', 'users.id')
-            ->select('users.username', 'albums.name','albums.id','shared_withs.id')
-            ->get();
-
         SharedWith::create([
             'user_id' => $userid->first()->id,
             'album_id' => $album->id,
             
         ]);
-        // view('components.modal.sharing',['sharedusers'=>$sharedusers]);
         return back()->with('success', 'Album Shared With : '.$email->User);
     }
 
-    public function index()
+    public function index(Album $album)
     {
         $sharedusers = Album::where('albums.user_id','=',Auth::id())
-            ->join('shared_withs', 'albums.id', '=', 'shared_withs.album_id')
+            ->where('albums.id','=',$album->id)
+            ->join('shared_withs', 'albums.id', '=','shared_withs.album_id')
             ->join('users', 'shared_withs.user_id', '=', 'users.id')
-            ->select('users.username', 'albums.name','albums.id','shared_withs.id')
+            ->select('users.username', 'users.name','users.id')
             ->get();
-
-        return view('admin.posts.editsharing',['sharedusers'=>$sharedusers]);
-    }
-
-    public function sharing()
-    {
-        return view('admin.posts.sharing');
+        return response()->json([
+            'shareduser'=> $sharedusers
+        ]);
     }
 
 }

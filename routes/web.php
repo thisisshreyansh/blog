@@ -1,14 +1,10 @@
 <?php
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SharedWithController;
 use App\Http\Controllers\AlbumController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DownloadFileController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Mail\NewUserNotification;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,27 +18,24 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::get('/', [AlbumController::class, 'index'])->name('home');
-Route::get('/myalbums', [AlbumController::class, 'myalbums'])->name('myalbums');
-Route::get('/sharedalbums', [AlbumController::class, 'sharedalbums'])->name('sharedalbums');
-Route::get('posts/{album:id}', [AlbumController::class, 'show']);
+Route::get('/albums/owned', [AlbumController::class, 'myalbums'])->name('myalbums');
+Route::get('/albums/shared', [AlbumController::class, 'sharedalbums'])->name('sharedalbums');
+Route::get('/albums/{album:id}', [AlbumController::class, 'show'])->name('showalbum');
  
-Route::get('download/{file_name}', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
-Route::get('get/{album:id}', [DownloadFileController::class, 'downloadAlbum'])->name('downloadAlbum');
+Route::get('album/{id}/download', [DownloadFileController::class, 'downloadFile'])->name('downloadFile');
+Route::get('album/image/{id}/download', [DownloadFileController::class, 'downloadAlbum'])->name('downloadAlbum');
 
-Route::get('admin/posts', [AlbumController::class, 'adminindex'])->middleware('admin');
-Route::get('admin/posts/album', [AlbumController::class, 'album'])->middleware('admin');
-Route::post('admin/posts/album', [AlbumController::class, 'store'])->middleware('admin');
-Route::get('admin/posts/{album:id}/edit', [AlbumController::class, 'edit'])->middleware('admin');
-Route::patch('admin/posts/{album:id}', [AlbumController::class, 'update'])->middleware('admin');
-Route::delete('admin/posts/{album:id}', [AlbumController::class, 'destroy'])->middleware('admin');
+Route::post('create/album', [AlbumController::class, 'store'])->middleware('admin')->name('createalbum');
+Route::patch('update/album/{album:id}', [AlbumController::class, 'update'])->middleware('admin');
+Route::delete('delete/album/{album:id}', [AlbumController::class, 'destroy'])->middleware('admin');
 
-Route::get('admin/posts/image', [ImageController::class, 'show'])->middleware('admin');
-Route::post('add/posts/{album:id}/image', [ImageController::class, 'store'])->middleware('admin')->name('storeimage');
-Route::delete('posts/{image:id}', [ImageController::class, 'destroy'])->middleware('admin');
 
-Route::get('admin/posts/sharing', [SharedWithController::class, 'sharing'])->middleware('admin');
-Route::post('admin/posts/sharing/{album:id}', [SharedWithController::class, 'store'])->middleware('admin');
-Route::get('admin/posts/editsharing', [SharedWithController::class, 'index'])->middleware('admin');
+Route::post('add/album/{album:id}/image', [ImageController::class, 'store'])->middleware('admin')->name('storeimage');
+Route::delete('album/image/{image:album_id}', [ImageController::class, 'destroy'])->middleware('admin')->name('destoryimage');
+
+
+Route::post('album/sharing/{album:id}', [SharedWithController::class, 'store'])->middleware('admin')->name('albumsharing');
+Route::get('albums/sharing-list/{album:id}', [SharedWithController::class, 'index'])->middleware('admin');
 Route::delete('removesharing/{user:id}', [SharedWithController::class, 'destroy'])->middleware('admin')->name('revoke.sharing');
 
 //verification for auth routes
@@ -55,5 +48,5 @@ Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showRese
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 
-Route::get('searchAlbum', [DownloadFileController::class, 'searchAlbum'])->name('searchAlbum');
-Route::get('/searchImage', [DownloadFileController::class, 'searchImage'])->name('searchImage');
+Route::get('/searchAlbum', [AlbumController::class, 'searchAlbum'])->name('searchAlbum');
+Route::get('/searchImage', [ImageController::class, 'searchImage'])->name('searchImage');

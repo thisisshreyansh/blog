@@ -54,6 +54,7 @@ namespace App\Models{
  * @property-read \App\Models\Album $album
  * @property-read \App\Models\User $author
  * @method static \Database\Factories\ImageFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image filter(array $filters)
  * @method static \Illuminate\Database\Eloquent\Builder|Image newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image query()

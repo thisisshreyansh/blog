@@ -16,7 +16,9 @@
                 </form>
 
             <div class="sharedpersonslist">
-
+                <ul class="sharingdata">
+                    
+                </ul>
                 {{-- @foreach (App\Models\SharedWith::where('album_id','=',$alb->id) 
                 ->join('users', 'user_id', '=', 'users.id')->get()
                                       as $su)

@@ -29,7 +29,7 @@ padding-top: 10px;
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li>
                     @if ($img->user_id === Auth::id())
-                    <form action="/posts/{{$img->album_id}}"
+                    <form action={{ route('destoryimage',$img->album_id) }}
                     method="POST">
                     @csrf
                     @method('DELETE')

@@ -1,60 +1,12 @@
-{{-- <x-layout>
-    <section class="px-6 py-8">
-        <main class="max-w-lg mx-auto mt-10">
-            <x-panel>
-                <h1 class="text-center font-bold text-xl">Register!</h1>
-                @if ($errors->any())
-            <div class="alert alert-danger">
-            <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-            </ul>
-            </div>
-            @endif
-                <form method="POST" action="/register" class="mt-10">
-                    @csrf
-
-                    <x-form.input name="name" val=" *" required />
-                    <x-form.input name="username" val=" *" required />
-                    <x-form.input name="email" val=" *" type="email" required />
-                    <x-form.input name="password" val=" *" type="password" autocomplete="new-password" required />
-                    <br/>
-                    <label class="block mb-2 text-xs text-red-500"
-                        for="fields with * are mandatory"
-                    >
-                    <i>fields with * are mandatory</i>
-                    </label>
-                    <x-form.button>Sign Up</x-form.button>
-                </form>
-            </x-panel>
-        </main>
-    </section>
-</x-layout> --}}
-
-
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
     <link
       href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
       rel="stylesheet"
     />
-    {{-- <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> --}}
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
       rel="stylesheet"
     />
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-
     <link href="{{ URL::asset('css/login/style.css') }}" type="text/css" rel="stylesheet">
- </head>
-  <body>
     <div style="text-align: -webkit-center">
         <a href="/">
             <img src="../images/Imagger.png" alt="Home page logo" width="150">
@@ -105,5 +57,3 @@
     </form>
     </div>
     <p class="last">Have a Account. Click here to <a href="/login">Login </a></p>
-  </body>
-</html>

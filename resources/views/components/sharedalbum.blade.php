@@ -20,13 +20,13 @@
       </div>
       
     </div>
-    <a href="/posts/{{$alb->album_id}}">
+    <a href="/albums/{{$alb->album_id}}">
     <img class="w-full bg-cover" src="{{ asset('storage/public/album/'.$alb->album_id.'/'. $alb->path) }}">
     </a>
     <div class="px-3 pb-2" style="padding: 10px;">
       <div class="mb-2" style="text-align: -webkit-center;">
         <div class="mb-2 text-sm ">
-            <a href="/posts/{{$alb->album_id}}" style="text-decoration: none; color:black;">
+            <a href="/albums/{{$alb->album_id}}" style="text-decoration: none; color:black;">
                 <span class="font-medium mr-2 text-capitalize"
                     style=" font-size: 24px; font-weight: bold; ">
                     {{$alb->name}}

@@ -20,4 +20,14 @@ class Image extends Model
         return $this->belongsTo(User::class,'user_id'); //user_id is forigen key if we give name author laravel think author forigenkey is author_id
     }
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['searchImage'] ?? false, fn($query, $searchImage) =>
+            $query->where(fn($query) =>
+                $query
+                    ->where('name', 'like', '%' . $searchImage . '%')
+            )
+        );
+        
+    }
 }

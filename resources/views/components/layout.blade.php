@@ -60,11 +60,11 @@
                                All Albums
                             </x-dropdown-item>
 
-                            <x-dropdown-item href="/myalbums">
+                            <x-dropdown-item href="/albums/owned">
                                 My Albums
                             </x-dropdown-item>
 
-                            <x-dropdown-item href="/sharedalbums">
+                            <x-dropdown-item href="/albums/shared">
                                 Shared With Me
                             </x-dropdown-item>
                         @endif
@@ -105,12 +105,11 @@
 
     </section>
     @if (session('status'))
-   <p class="alert alert-success">{{ session('status') }}</p>
+        <p class="alert alert-success">{{ session('status') }}</p>
     @endif
     <x-flash/>
 
     @include('components.modal.newalbum')
-
     @include('components.modal.edit')
     @include('components.modal.sharing')
 </body>
@@ -154,7 +153,7 @@
         //   }
         //  });
         
-        $('#formaction').attr("action",'/admin/posts/'+id);
+        $('#formaction').attr("action",'/update/album/'+id);
         $(editmodal).css("display", "block")
         } );
 
@@ -166,17 +165,33 @@
 
 {{-- add sharing --}}
 <script>
+
     $('.open-share-btn').click(function() {
         // ajax form
         var id = $(this).data('share-id');   
-        console.log(id);
+        // console.log(id);
         var sharemodal = $(this).data('share-target');
 
         $('#id').val(id); 
-        $('#formshareaction').attr("action",'admin/posts/sharing/'+id);
+        $('#formshareaction').attr("action",'album/sharing/'+id);
         $(sharemodal).css("display", "block")
         // call a function fetch sharing with a ajax call with response json
         // for delete a set data attribute and use those when called 
+
+        $.getJSON( "sharing-list/"+id, function(data){
+            console.log(data);
+            var sharinglist = [];
+            $.each(data, function(key,value){
+                
+                for (var i = 0; i < value.length; i++) {
+                    sharinglist.push("<li>Username : "+value[i].username+" Name : "+value[i].name+
+                        "<div><form action=/removesharing/"+value[i].id+ 
+                            " method='POST'> <button class='text-red-500 hover:text-red-600'>Delete</button> </form> </div> </li>")
+                }
+            });
+            $(".sharingdata").html(sharinglist);
+        });
+
         } );
 
     $('#close-shairng-btn').click(function() {

@@ -36,13 +36,6 @@ class AlbumController extends Controller
             ]);
     }
 
-    public function adminindex()
-    {
-        return view('admin.posts.index', [
-            'posts' => Album::paginate(50)
-        ]);
-    }
-
     public function show(Album $album , Image $image)
     {
         return view('posts.image', [
@@ -51,11 +44,6 @@ class AlbumController extends Controller
                         ->paginate(9)->withQueryString(),
             // 'searchimage'=> Image::filter(request(['searchImage']))
         ]);
-    }
-
-    public function album()
-    {
-        return view('admin.posts.album');
     }
 
     public function store(Request $request)
@@ -70,15 +58,7 @@ class AlbumController extends Controller
         $album['path'] = request()->file('path')->storeAs('album/'.$album->id , $album['name'].'.png');
         $album['path'] = $album['name'].'.png';
         $album->update();        
-        return redirect('admin/posts')->with('success', 'Album Created');
-    }
-
-    public function edit(Album $album)
-    {
-        return view('admin.posts.albumedit', 
-        [
-            'album' => $album
-        ]);
+        return back()->with('success', 'Album Created');
     }
 
     public function update(Album $album)
@@ -142,5 +122,34 @@ class AlbumController extends Controller
             ->join('users', 'albums.user_id', '=', 'users.id')
             ->where('shared_withs.user_id', '=', Auth::id())->paginate(6)->withQueryString()
             ]);
+    }
+
+    public function searchAlbum(Request $request){
+        
+        if($request->ajax()) {
+          
+            $data = Album::where('name', 'LIKE', $request->name.'%')
+                ->get();
+           
+            $output = '';
+           
+            if (count($data)>0) {
+              
+                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
+              
+                foreach ($data as $row){
+                   
+                    $output .= '<li class="list-group-item">'.$row->name.'</li>';
+                }
+              
+                $output .= '</ul>';
+            }
+            else {
+             
+                $output .= '<li class="list-group-item">'.'No results'.'</li>';
+            }
+           
+            return $output;
+        }
     }
 }

@@ -8,7 +8,7 @@
                 <span class="font-bold text-secondary uppercase">Add New Album</span>
                 <button id="ok-album-btn" class="float-end font-bold text-red-600 text-lg">X</button>
                 </div>
-                    <form method="POST" action="/admin/posts/album" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('createalbum') }}" enctype="multipart/form-data">
                         @csrf
             
                         <x-form.input name="name" required />
